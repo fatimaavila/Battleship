@@ -56,11 +56,14 @@ public static void crearBarcosPlayer(){
     System.out.println("\nAsigne posición ");
     //Deploying five ships for player
     int x,y,barcosAsignados=0;
+    char xletra;
     while (barcosAsignados < playerShips) {
        
         System.out.print(" -X- del barco " + (barcosAsignados+1) + ": ");
 
-        x = input.nextInt();
+      //  x = input.nextInt();
+      xletra = input.next().charAt(0);
+      x= ((int) xletra)-65;
         if (x>=0 && x<numFilas){
 
                 System.out.print(" -Y- del barco " + (barcosAsignados+1) +": ");
@@ -101,10 +104,94 @@ public static void crearBarcosCompu(){
         }
     }
     printTablero("Barcos listos");
-
-
-
 } // fin de los barcos de la compu
+
+public static void turnoPlayer(){
+    System.out.println("\nTU TURNO");
+    int x = -1, y = -1;
+    do {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Ingresa la coordenada -X- ");
+        x = input.nextInt();
+        System.out.print("Ingresa la coordenada -Y- ");
+        y = input.nextInt();
+
+        if ((x >= 0 && x < numFilas) && (y >= 0 && y < numCols)) //valid guess
+        {
+            if (tablero[x][y] == "🚤") //if computer ship is already there; computer loses ship
+            {
+                System.out.println("¡Boom! Hundiste un barco del contrincante");
+                tablero[x][y] = "🧨"; //Hit mark
+                --compShips;
+            }
+            else if (tablero[x][y] == "🚢") {
+                System.out.println("¡Oh no, hundiste tu barco!");
+                tablero[x][y] = "🧨";
+                --playerShips;
+                ++compShips;
+            }
+            else if (tablero[x][y] == "🀆") {
+                System.out.println("Oh no, fallaste el tiro");
+                tablero[x][y] = "-";
+            }
+        }
+        else if ((x < 0 || x >= numFilas) || (y < 0 || y >= numCols))  //invalid guess
+            System.out.println("No puedes colocar barcos fuera de " + numFilas + " por " + numCols + "del tablero.");
+    } while((x < 0 || x >= numFilas) || (y < 0 || y >= numCols)); 
+} // ------ fin del turno del jugador
+
+   public static void turnoCompu(){
+    System.out.println("\nTURNO DEL CONTRINCANTE");
+    //Guess co-ordinates
+    int x = -1, y = -1;
+    do {
+        x = (int)(Math.random() * 10);
+        y = (int)(Math.random() * 10);
+
+        if ((x >= 0 && x < numFilas) && (y >= 0 && y < numCols)) //valid guess
+        {
+            if (tablero[x][y] == "🚢") //if player ship is already there; player loses ship
+            {
+                System.out.println("El contrincante hundió uno de tus barcos");
+                tablero[x][y] = "🧨";
+                --playerShips;
+                ++compShips;
+            }
+            else if (tablero[x][y] == "🚤") {
+                System.out.println("El contrincante hundió su propio barco");
+                tablero[x][y] = "❌";
+            }
+            else if (tablero[x][y] == "🀆") {
+                System.out.println("El contrincante falló");
+                //Saving missed guesses for computer
+                if(fallos[x][y] != 1)
+                    fallos[x][y] = 1;
+            }
+        }
+    }while((x < 0 || x >= numFilas) || (y < 0 || y >= numCols)); 
+}  // balas de la computer
+
+public static void Batalla(){
+    turnoPlayer();
+    turnoCompu();
+
+    printTablero("");
+
+    System.out.println();
+    System.out.println("Barcos del jugador " + playerShips + " | Barcos del contrincante " + compShips);
+    System.out.println();
+
+} // fin batalla 
+
+  public static void gameOver(){
+        System.out.println("Your ships: " + playerShips + " | Computer ships: " + compShips);
+        if(playerShips > 0 && compShips <= 0)
+            System.out.println("Hooray! You won the battle :)");
+        else
+            System.out.println("");
+        System.out.println();
+
+   } // game over
 
     //------------------------- main---------------------------------
   public static void main(String[] args) {
@@ -115,6 +202,14 @@ public static void crearBarcosCompu(){
     //------ deploy barcos
     crearBarcosPlayer();
     crearBarcosCompu();
+    //turnoPlayer();
+   // turnoCompu();
+    while(playerShips != 0 && compShips != 0) {
+      Batalla();
+ }
+
+ gameOver();
+   
    
     
     
