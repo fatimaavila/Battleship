@@ -4,8 +4,8 @@ import java.util.*;
 
 class Main {
   //-------------------------- globales -----------------------------
-    public static int numFilas = 10;
-    public static int numCols = 10;
+    public static int numFilas = 5;
+    public static int numCols = 5;
     public static int playerShips = 3;
     public static int compShips = 3;
 
@@ -29,7 +29,13 @@ class Main {
             System.out.print("\u001B[0m");
 
             for (int c = 0; c < numCols; c++){
-                System.out.print("  "+tablero[c][f]+"  ");
+              if(tablero[c][f]== "🚤"){
+                System.out.print("  "+"🀆"+"  ");
+              }
+              else{
+                System.out.print("  "+tablero[c][f]+"  "); // mostrar con barcos escondidos
+              }
+                
             }
             
             System.out.print("\u001B[0m");
@@ -84,7 +90,7 @@ public static void crearBarcosPlayer(){
         { 
           System.out.println("\u001B[31m No puedes colocar barcos fuera de " + numFilas + " por " + numCols + " en el tablero\u001B[0m");
           }// si la posicion x es valida 
-    System.out.println("Barco "+ xletra+y+tablero[x][y]);    
+  //  System.out.println("Barco "+ xletra+y+tablero[x][y]);    
     } //fin numero de barcos a ingresar
     printTablero("Barcos listos");
 } // barcos del jugador
@@ -94,12 +100,12 @@ public static void crearBarcosCompu(){
     //Deploying five ships for computer
    
     for (int i = 1; i <= compShips; ) {
-        int x =  (int)(Math.random() * 10);
-        int y = (int)(Math.random() * 5);
+        int x =  (int)(Math.random() * numCols);
+        int y = (int)(Math.random() * numFilas);
 
         if((x >= 0 && x < numFilas) && (y >= 0 && y < numCols) && (tablero[x][y] == "🀆"))
         {
-            tablero[x][y] =   "🚤";
+            tablero[x][y] =   "🚤";//------ barco de la compu
             System.out.println("Barco"+ i + "listo");
             i++;
         }
@@ -111,9 +117,12 @@ public static void turnoPlayer(){
     System.out.println("\nTU TURNO");
     int x = -1, y = -1;
     do {
+        char xletra;
         Scanner input = new Scanner(System.in);
         System.out.print("Ingresa la coordenada -X- ");
-        x = input.nextInt();
+        xletra = input.next().toUpperCase().charAt(0);
+        x= ((int) xletra)-65;
+        //x = input.nextInt();
         System.out.print("Ingresa la coordenada -Y- ");
         y = input.nextInt();
 
@@ -129,11 +138,10 @@ public static void turnoPlayer(){
                 System.out.println("¡Oh no, hundiste tu barco!");
                 tablero[x][y] = "🧨";
                 --playerShips;
-                ++compShips;
             }
             else if (tablero[x][y] == "🀆") {
-                System.out.println("Oh no, fallaste el tiro");
-                tablero[x][y] = "-";
+                System.out.println("\u001B[36m Oh no, fallaste el tiro\u001B[0m");
+                tablero[x][y] = "⚪️";
             }
         }
         else if ((x < 0 || x >= numFilas) || (y < 0 || y >= numCols))  //invalid guess
@@ -146,9 +154,9 @@ public static void turnoPlayer(){
     //Guess co-ordinates
     int x = -1, y = -1;
     do {
-        x = (int)(Math.random() * 10);
-        y = (int)(Math.random() * 10);
-
+        x = (int)(Math.random() * numCols);
+        y = (int)(Math.random() * numFilas);
+        // System.out.println(x+","+y);
         if ((x >= 0 && x < numFilas) && (y >= 0 && y < numCols)) //valid guess
         {
             if (tablero[x][y] == "🚢") //if player ship is already there; player loses ship
@@ -156,15 +164,15 @@ public static void turnoPlayer(){
                 System.out.println("El contrincante hundió uno de tus barcos");
                 tablero[x][y] = "🧨";
                 --playerShips;
-                ++compShips;
             }
             else if (tablero[x][y] == "🚤") {
                 System.out.println("El contrincante hundió su propio barco");
                 tablero[x][y] = "❌";
+                --compShips;
             }
             else if (tablero[x][y] == "🀆") {
                 System.out.println("El contrincante falló");
-                tablero[x][y] = "-";
+                tablero[x][y] = "⬜️";
                 //Saving missed guesses for computer
                 if(fallos[x][y] != 1)
                     fallos[x][y] = 1;
@@ -223,7 +231,6 @@ public static void Batalla(){
  gameOver();
    
    
-    
     
   }
 }
