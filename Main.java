@@ -154,9 +154,13 @@ public static void turnoPlayer(){
     //Guess co-ordinates
     int x = -1, y = -1;
     do {
-        x = (int)(Math.random() * numCols);
+        
+        do {
+          x = (int)(Math.random() * numCols);
         y = (int)(Math.random() * numFilas);
-        // System.out.println(x+","+y);
+        } while (tablero[x][y] !="🀆" && tablero[x][y] !="🚢"  );
+        
+         System.out.println(x+","+y);
         if ((x >= 0 && x < numFilas) && (y >= 0 && y < numCols)) //valid guess
         {
             if (tablero[x][y] == "🚢") //if player ship is already there; player loses ship
