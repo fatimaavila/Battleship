@@ -1,4 +1,5 @@
 import java.util.*;
+//import java.io.*;
 
 
 class Main {
@@ -22,17 +23,17 @@ class Main {
         System.out.println();
 
         //Middle 
-        for(int x = 0; x < tablero.length; x++) {
+        for(int f = 0; f < numFilas; f++) {
             //System.out.print("\u001B[0m");
-            System.out.print("\u001B[36m" + x + "\u001B[36m|");
+            System.out.print("\u001B[36m" + f + "\u001B[36m|");
             System.out.print("\u001B[0m");
 
-            for (int y = 0; y < tablero[x].length; y++){
-                System.out.print("  "+tablero[x][y]+"  ");
+            for (int c = 0; c < numCols; c++){
+                System.out.print("  "+tablero[c][f]+"  ");
             }
             
             System.out.print("\u001B[0m");
-            System.out.println("\u001B[36m|" + x);
+            System.out.println("\u001B[36m|" + f);
             System.out.print("\u001B[0m");
             //System.out.print("\u001B[0m");
             }
@@ -43,9 +44,9 @@ class Main {
         
 public static void crearCampoDeBatalla(){
 
-    for(int i = 0; i < tablero.length; i++) {
-        for (int j = 0; j < tablero[i].length; j++) {
-            tablero[i][j] = "🀆";
+    for(int c = 0; c < numCols; c++) {
+        for (int f = 0; f < numFilas; f++) {
+            tablero[c][f] = "🀆";
         }
     }
 }  // ---- fin del ocean map
@@ -55,35 +56,35 @@ public static void crearBarcosPlayer(){
 
     System.out.println("\nAsigne posición ");
     //Deploying five ships for player
-    int x,y,barcosAsignados=0;
+    int x=0,y=0,barcosAsignados=0;
     char xletra;
     while (barcosAsignados < playerShips) {
        
         System.out.print(" -X- del barco " + (barcosAsignados+1) + ": ");
 
-      //  x = input.nextInt();
-      xletra = input.next().charAt(0);
-      x= ((int) xletra)-65;
-        if (x>=0 && x<numFilas){
+      //x = input.nextInt();
+      xletra = input.next().toUpperCase().charAt(0);
+     x= ((int) xletra)-65;
+        if (x>=0 && x<numCols){
 
                 System.out.print(" -Y- del barco " + (barcosAsignados+1) +": ");
                 y = input.nextInt();
-                            if(y >= 0 && y < numCols && (tablero[x][y] == "🀆"))
+                            if(y >= 0 && y <numFilas && (tablero[x][y] == "🀆"))
                                 {
                                     tablero[x][y] =   "🚢";
                                     System.out.println("---------------------- ");
                                     barcosAsignados++;
                                 }
-                                else if(y >= 0 &&  y < numCols && tablero[x][y] == "🚢")
+                                else if(y >= 0 &&  y < numFilas && tablero[x][y] == "🚢")
                                     System.out.println("\u001B[31m ¡No puedes colocar dos barcos en el mismo lugar!\u001B[0m");
-                                else if((x < 0 || x > numFilas) || y < 0 || y > numCols)
-                                    System.out.println("\u001B[31m No puedes colocar barcos fuera de " + numFilas + " por " + numCols + " en el tablero\u001B[0m");
+                                else if((x < 0 || x > numCols) || y < 0 || y > numFilas)
+                                    System.out.println("\u001B[31m No puedes colocar barcos fuera de " + numCols + " por " + numFilas + " en el tablero\u001B[0m");
 
         } else 
         { 
           System.out.println("\u001B[31m No puedes colocar barcos fuera de " + numFilas + " por " + numCols + " en el tablero\u001B[0m");
           }// si la posicion x es valida 
-        
+    System.out.println("Barco "+ xletra+y+tablero[x][y]);    
     } //fin numero de barcos a ingresar
     printTablero("Barcos listos");
 } // barcos del jugador
@@ -136,7 +137,7 @@ public static void turnoPlayer(){
             }
         }
         else if ((x < 0 || x >= numFilas) || (y < 0 || y >= numCols))  //invalid guess
-            System.out.println("No puedes colocar barcos fuera de " + numFilas + " por " + numCols + "del tablero.");
+            System.out.println("No puedes colocar barcos fuera de " + numFilas + " por " + numCols + " del tablero.");
     } while((x < 0 || x >= numFilas) || (y < 0 || y >= numCols)); 
 } // ------ fin del turno del jugador
 
@@ -163,6 +164,7 @@ public static void turnoPlayer(){
             }
             else if (tablero[x][y] == "🀆") {
                 System.out.println("El contrincante falló");
+                tablero[x][y] = "-";
                 //Saving missed guesses for computer
                 if(fallos[x][y] != 1)
                     fallos[x][y] = 1;
@@ -174,7 +176,8 @@ public static void turnoPlayer(){
 public static void Batalla(){
     turnoPlayer();
     turnoCompu();
-
+    pressAnyKeyToContinue();
+   
     printTablero("");
 
     System.out.println();
@@ -184,15 +187,24 @@ public static void Batalla(){
 } // fin batalla 
 
   public static void gameOver(){
-        System.out.println("Your ships: " + playerShips + " | Computer ships: " + compShips);
         if(playerShips > 0 && compShips <= 0)
-            System.out.println("Hooray! You won the battle :)");
+            System.out.println("🧨¡GANASTE!🧨\n ERES EL CAPITÁN SUPREMO");
         else
-            System.out.println("");
+            System.out.println("😵AHHHHH TE HUNDIERON TODOS TUS BARCOS😵");
         System.out.println();
 
    } // game over
 
+  public static void pressAnyKeyToContinue()
+      { 
+        System.out.println("Presiona ENTER para continuar");
+        try
+        {
+            System.in.read();
+        }  
+        catch(Exception e)
+        {}  
+      }
     //------------------------- main---------------------------------
   public static void main(String[] args) {
     
