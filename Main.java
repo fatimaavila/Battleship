@@ -130,7 +130,7 @@ public static void turnoPlayer(){
         {
             if (tablero[x][y] == "🚤") //if computer ship is already there; computer loses ship
             {
-                System.out.println("¡Boom! Hundiste un barco del contrincante");
+                System.out.println("\u001B[32m¡Boom! Hundiste un barco del contrincante\u001B[0m");
                 tablero[x][y] = "🧨"; //Hit mark
                 --compShips;
             }
@@ -140,7 +140,7 @@ public static void turnoPlayer(){
                 --playerShips;
             }
             else if (tablero[x][y] == "🀆") {
-                System.out.println("\u001B[36m Oh no, fallaste el tiro\u001B[0m");
+                System.out.println("\u001B[31m Oh no, fallaste el tiro\u001B[0m");
                 tablero[x][y] = "⚪️";
             }
         }
@@ -160,22 +160,22 @@ public static void turnoPlayer(){
         y = (int)(Math.random() * numFilas);
         } while (tablero[x][y] !="🀆" && tablero[x][y] !="🚢"  );
         
-         System.out.println(x+","+y);
+         //System.out.println(x+","+y);
         if ((x >= 0 && x < numFilas) && (y >= 0 && y < numCols)) //valid guess
         {
             if (tablero[x][y] == "🚢") //if player ship is already there; player loses ship
             {
-                System.out.println("El contrincante hundió uno de tus barcos");
+                System.out.println("\u001B[31mEl contrincante hundió uno de tus barcos\u001B[0m");
                 tablero[x][y] = "🧨";
                 --playerShips;
             }
             else if (tablero[x][y] == "🚤") {
-                System.out.println("El contrincante hundió su propio barco");
+                System.out.println("\u001B[32m El contrincante hundió su propio barco\u001B[0m");
                 tablero[x][y] = "❌";
                 --compShips;
             }
             else if (tablero[x][y] == "🀆") {
-                System.out.println("El contrincante falló");
+                System.out.println("\u001B[32mEl contrincante falló\u001B[0m");
                 tablero[x][y] = "⬜️";
                 //Saving missed guesses for computer
                 if(fallos[x][y] != 1)
@@ -202,7 +202,7 @@ public static void Batalla(){
         if(playerShips > 0 && compShips <= 0)
             System.out.println("🧨¡GANASTE!🧨\n ERES EL CAPITÁN SUPREMO");
         else
-            System.out.println("😵AHHHHH TE HUNDIERON TODOS TUS BARCOS😵");
+            System.out.println("😵 AHHHHH TE HUNDIERON TODOS TUS BARCOS 😵");
         System.out.println();
 
    } // game over
