@@ -231,10 +231,6 @@ public static void Batalla(){
     while(playerShips != 0 && compShips != 0) {
       Batalla();
  }
-
- gameOver();
-   
-   
-    
-  }
-}
+ gameOver();  
+}//main normal
+}// main fin total
