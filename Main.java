@@ -57,6 +57,10 @@ public static void crearCampoDeBatalla(){
     }
 }  // ---- fin del ocean map
 
+public static int getPositionLetter(char p_x)
+{
+ return ((int)p_x ) - 65;
+}
 public static void crearBarcosPlayer(){
     Scanner input = new Scanner(System.in);
 
@@ -70,7 +74,8 @@ public static void crearBarcosPlayer(){
 
       //x = input.nextInt();
       xletra = input.next().toUpperCase().charAt(0);
-     x= ((int) xletra)-65;
+     //x= ((int) xletra)-65;
+     x = getPositionLetter(xletra);
         if (x>=0 && x<numCols){
 
                 System.out.print(" -Y- del barco " + (barcosAsignados+1) +": ");
@@ -121,7 +126,9 @@ public static void turnoPlayer(){
         Scanner input = new Scanner(System.in);
         System.out.print("Ingresa la coordenada -X- ");
         xletra = input.next().toUpperCase().charAt(0);
-        x= ((int) xletra)-65;
+        x = getPositionLetter(xletra);
+       // x= ((int) xletra)-65;
+
         //x = input.nextInt();
         System.out.print("Ingresa la coordenada -Y- ");
         y = input.nextInt();
@@ -132,12 +139,12 @@ public static void turnoPlayer(){
             {
                 System.out.println("\u001B[32m¡Boom! Hundiste un barco del contrincante\u001B[0m");
                 tablero[x][y] = "🧨"; //Hit mark
-                --compShips;
+                compShips = pierdeBarco(compShips);
             }
             else if (tablero[x][y] == "🚢") {
                 System.out.println("¡Oh no, hundiste tu barco!");
                 tablero[x][y] = "🧨";
-                --playerShips;
+                playerShips = pierdeBarco(playerShips);
             }
             else if (tablero[x][y] == "🀆") {
                 System.out.println("\u001B[31m Oh no, fallaste el tiro\u001B[0m");
@@ -167,12 +174,14 @@ public static void turnoPlayer(){
             {
                 System.out.println("\u001B[31mEl contrincante hundió uno de tus barcos\u001B[0m");
                 tablero[x][y] = "🧨";
-                --playerShips;
+               // --playerShips;
+               playerShips = pierdeBarco(playerShips);
             }
             else if (tablero[x][y] == "🚤") {
                 System.out.println("\u001B[32m El contrincante hundió su propio barco\u001B[0m");
                 tablero[x][y] = "❌";
-                --compShips;
+                 compShips = pierdeBarco(compShips);
+                //--compShips;
             }
             else if (tablero[x][y] == "🀆") {
                 System.out.println("\u001B[32mEl contrincante falló\u001B[0m");
@@ -186,6 +195,7 @@ public static void turnoPlayer(){
 }  // balas de la computer
 
 public static void Batalla(){
+    
     turnoPlayer();
     turnoCompu();
     pressAnyKeyToContinue();
@@ -195,18 +205,23 @@ public static void Batalla(){
     System.out.println();
     System.out.println("Barcos del jugador " + playerShips + " | Barcos del contrincante " + compShips);
     System.out.println();
+    
 
 } // fin batalla 
 
   public static void gameOver(){
         if(playerShips > 0 && compShips <= 0)
-            System.out.println("🧨¡GANASTE!🧨\n ERES EL CAPITÁN SUPREMO");
+            System.out.println("🧨¡GANASTE!🧨\n\t ERES EL CAPITÁN SUPREMO");
         else
-            System.out.println("😵 AHHHHH TE HUNDIERON TODOS TUS BARCOS 😵");
+            System.out.println("😵 AHHHHH HUNDIERON TODOS TUS BARCOS 😵");
         System.out.println();
 
    } // game over
 
+  public static int pierdeBarco(int p_barcosActuales)
+  {
+   return p_barcosActuales - 1;
+  }
   public static void pressAnyKeyToContinue()
       { 
         System.out.println("Presiona ENTER para continuar");
