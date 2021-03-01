@@ -142,7 +142,7 @@ public static void turnoPlayer(){
                 compShips = pierdeBarco(compShips);
             }
             else if (tablero[x][y] == "🚢") {
-                System.out.println("¡Oh no, hundiste tu barco!");
+                System.out.println("\u001B[31m¡Oh no, hundiste tu barco!\u001B[0m");
                 tablero[x][y] = "🧨";
                 playerShips = pierdeBarco(playerShips);
             }
