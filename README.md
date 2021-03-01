@@ -17,3 +17,9 @@ Para definir que iban a realizar cada uno de los usuarios se utilizó un diagram
 <img src="https://imgur.com/thzdmyG.png" width="500" height="300"/> 
 
 Se realizaron dos métodos con return para poder utilizarlos y realizar el unittesting, con Junit de acuerdo a lo que sugiere REPL
+
+### Videos de las pruebas y funcionamiento
+
+
+- https://youtu.be/xSXFVLEJUTw → Partida de Battleship
+- https://youtu.be/YXkJZTUbWlo → prueba en JMeter
