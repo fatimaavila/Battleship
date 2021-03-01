@@ -12,3 +12,8 @@ Aunque esta era una buena opción para el usuario, un array no puede ser de dos 
 <img src="https://imgur.com/RGFkVCG.png" width="350" height="300"/> 
 
 Para definir que iban a realizar cada uno de los usuarios se utilizó un diagrama de casos de uso, donde se decidió que la computadora haría la mayoría de los casos. Y el usuario se encargaría de solo lo que el puede controlar.
+
+## Unit tests probados en REPL 🛠
+<img src="https://imgur.com/thzdmyG.png" width="500" height="300"/> 
+
+Se realizaron dos métodos con return para poder utilizarlos y realizar el unittesting, con Junit de acuerdo a lo que sugiere REPL
