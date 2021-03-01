@@ -23,3 +23,17 @@ Se realizaron dos métodos con return para poder utilizarlos y realizar el unitt
 
 - https://youtu.be/xSXFVLEJUTw → Partida de Battleship
 - https://youtu.be/YXkJZTUbWlo → prueba en JMeter
+
+## Pruebas en JMETER
+<img src="https://imgur.com/G8Eoszo.png" width="500" height="300"/> 
+<img src="https://imgur.com/6MWPSP7.png" width="500" height="300"/> 
+
+<img src="https://imgur.com/vEfAUaj.png" width="500" height="300"/> 
+<img src="https://imgur.com/0pONmRD.png" width="500" height="300"/> 
+
+<img src="https://imgur.com/K5q85KE.png" width="500" height="300"/> 
+<img src="https://imgur.com/uiC01Kc.png" width="500" height="300"/> 
+
+
+
+
